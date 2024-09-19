@@ -364,12 +364,30 @@ public class ConnectPlugin extends CordovaPlugin {
             executeGraph(args, callbackContext);
 
             return true;
-        } else if (action.equals("logAddToCart")) {
-            String contentId = args.getString(0);
-            logAddedToCartEvent(contentId, contentType, currency, price);
-            callbackContext.success();
-            
-            return true;
+        }else if (action.equals("logAddedToCartEvent")) {
+    String contentId = args.getString(0);
+    String contentType = args.getString(1);
+    String currency = args.getString(2);
+    double price = args.getDouble(3);
+    
+    logAddedToCartEvent(contentId, contentType, currency, price, callbackContext);
+    return true;
+}
+
+private void logAddedToCartEvent(String contentId, String contentType, String currency, double price, CallbackContext callbackContext) {
+    try {
+        Bundle params = new Bundle();
+        params.putString(AppEventsConstants.EVENT_PARAM_CONTENT_ID, contentId);
+        params.putString(AppEventsConstants.EVENT_PARAM_CONTENT_TYPE, contentType);
+        params.putString(AppEventsConstants.EVENT_PARAM_CURRENCY, currency);
+        
+        logger.logEvent(AppEventsConstants.EVENT_NAME_ADDED_TO_CART, price, params);
+
+        callbackContext.success("Event logged successfully.");
+    } catch (Exception e) {
+        callbackContext.error("Failed to log event: " + e.getMessage());
+    }
+};
         }
         else if (action.equals("getDeferredApplink")) {
             executeGetDeferredApplink(args, callbackContext);
