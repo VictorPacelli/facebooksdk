@@ -1,4 +1,5 @@
 package org.apache.cordova.facebook;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -363,13 +364,14 @@ public class ConnectPlugin extends CordovaPlugin {
             executeGraph(args, callbackContext);
 
             return true;
-	} else if (action.equals("logAddToCart")) {
-        String contentId = args.getString(0);
-        logAddedToCartEvent(contentId, contentType, currency, price);
-        callbackContext.success();
-		
-        return true;
-        } else if (action.equals("getDeferredApplink")) {
+        } else if (action.equals("logAddToCart")) {
+            String contentId = args.getString(0);
+            logAddedToCartEvent(contentId, contentType, currency, price);
+            callbackContext.success();
+            
+            return true;
+        }
+        else if (action.equals("getDeferredApplink")) {
             executeGetDeferredApplink(args, callbackContext);
             return true;
         } else if (action.equals("activateApp")) {
@@ -381,11 +383,6 @@ public class ConnectPlugin extends CordovaPlugin {
                 }
             });
 
-            return true;
-        } else if (action.equals("logAddToCart")) {
-            String contentId = args.getString(0);
-            logAddedToCartEvent(contentId, contentType, currency, price);
-            callbackContext.success();
             return true;
         }
         return false;
