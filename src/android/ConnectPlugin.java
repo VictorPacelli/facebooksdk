@@ -1,5 +1,4 @@
 package org.apache.cordova.facebook;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -376,6 +375,11 @@ public class ConnectPlugin extends CordovaPlugin {
                 }
             });
 
+            return true;
+        } else if (action.equals("logAddToCart")) {
+            String contentId = args.getString(0);
+            logAddedToCartEvent(contentId, contentType, currency, price);
+            callbackContext.success();
             return true;
         }
         return false;
